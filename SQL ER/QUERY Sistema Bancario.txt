@@ -1,0 +1,54 @@
+//QUERY Para iniciar sesion 
+
+SELECT * 
+FROM usuario 
+WHERE correo_electronico= :correo_electronico 
+AND contrasena= :contrasena;
+
+
+//QUERY para consultar usuario 
+
+SELECT cliente.* 
+FROM usuario  
+JOIN cliente ON usuario.identificacion_cliente=cliente.identificacion
+WHERE usuario.correo_electronico= :correo_electronico ;
+
+//QUERY para saldo del usuario 
+
+SELECT cuenta.saldo
+FROM usuario 
+JOIN cliente ON usuario.identificacion_cliente=cliente.identificacion
+JOIN cuenta ON cliente.identificacion = cuenta.identificacion_cliente
+WHERE usuario.correo_electronico= :correo_electronico ;
+
+
+//QUERY para transacciones del usuario 
+
+SELECT transacciones.*
+FROM usuario 
+JOIN cliente ON usuario.identificacion_cliente=cliente.identificacion
+JOIN cuenta ON cliente.identificacion = cuenta.identificacion_cliente
+JOIN transacciones  ON transacciones.id_cuenta = cuenta.id_cuenta
+WHERE usuario.correo_electronico= :correo_electronico ;
+
+//QUERY para retiros
+
+SELECT transacciones.*
+FROM usuario 
+JOIN cliente ON usuario.identificacion_cliente=cliente.identificacion
+JOIN cuenta ON cliente.identificacion = cuenta.identificacion_cliente
+JOIN transacciones  ON transacciones.id_cuenta = cuenta.id_cuenta AND tipo_transaccion='retiros'
+WHERE usuario.correo_electronico= :correo_electronico ;
+
+
+
+
+
+
+
+
+
+
+
+
+
